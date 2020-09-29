@@ -1,0 +1,25 @@
+http_client_timeout: 5s
+server:
+  listeners:
+    - addr: ":4000"
+      tlss:
+        cert_file: server.crt
+        key_file: server.pem
+        generate:
+          hosts:
+            - oliva.pw
+fallback:
+  redirect_to: "PROTO://WWW_HOST/URI"
+  redirect_status: 303
+hosts:
+  unapu.com:
+    project_page: "https://doc.HOST/%s"
+    patterns:
+      "/incofex/{project}":
+        destinations:
+          - "https://github.com/unapu/incofex__%s"
+      "/{project}":
+        destinations:
+        - "https://github.com/unapu-go/%s"
+        - "https://github.com/unapu/%s"
+        - "git@github.com:unapu/%s.git"

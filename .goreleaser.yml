@@ -1,0 +1,46 @@
+# Make sure to check the documentation at http://goreleaser.com
+project_name: eagravos
+
+before:
+  hooks:
+    - go generate
+builds:
+  -
+    ignore:
+      - goos: darwin
+      - goos: windows
+      - goos: linux
+        goarch: 386
+
+    flags:
+
+    ldflags:
+      - -s -w -X main.projectName={{.ProjectName}} -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.Date}}
+
+    asmflags:
+      - all=-trimpath={{.Env.GOPATH}}
+
+    gcflags:
+      - all=-trimpath={{.Env.GOPATH}}
+
+    hooks:
+      pre: "go run hooks/pre-build/main.go"
+      post: "go run hooks/post-build/main.go {{.ProjectName}}"
+
+archive:
+  replacements:
+    darwin: Darwin
+    linux: Linux
+    windows: Windows
+    386: i386
+    amd64: x86_64
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ .Tag }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+    - '^docs:'
+    - '^test:'
