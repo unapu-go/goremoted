@@ -1,16 +1,15 @@
 # Make sure to check the documentation at http://goreleaser.com
-project_name: eagravos
+project_name: goremoted
 
 before:
   hooks:
-    - go generate
+    - go mod download
+
 builds:
   -
     ignore:
       - goos: darwin
       - goos: windows
-      - goos: linux
-        goarch: 386
 
     flags:
 
@@ -22,10 +21,6 @@ builds:
 
     gcflags:
       - all=-trimpath={{.Env.GOPATH}}
-
-    hooks:
-      pre: "go run hooks/pre-build/main.go"
-      post: "go run hooks/post-build/main.go {{.ProjectName}}"
 
 archive:
   replacements:

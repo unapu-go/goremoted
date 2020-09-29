@@ -1,3 +1,3 @@
 #!/bin/bash
 
-yarn add --offline -D husky
+goreleaser --snapshot --skip-publish --rm-dist

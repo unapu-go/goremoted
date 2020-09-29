@@ -1,0 +1,21 @@
+.*
+~*
+*~
+*.swp
+
+# node modules
+node_modules
+
+# build dir
+dist
+
+# binary
+goremoted
+
+# cert files
+server.crt
+server.pem
+
+# local config
+config.yaml
+config.yml
